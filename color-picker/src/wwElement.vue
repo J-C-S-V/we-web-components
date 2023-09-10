@@ -1,6 +1,11 @@
 <template>
-  <div class="my-element">
-    <p :style="textStyle">I am a custom element !</p>
+  <div class="ww-color-picker">
+    <input type="color" />
+    <ww-Element
+      v-bind="content.labelComponent"
+      :ww-props="{ text: color || '' }"
+    />
+    {{ color }}
   </div>
 </template>
 
@@ -8,21 +13,36 @@
 export default {
   props: {
     content: { type: Object, required: true },
+    uid: { type: Object, required: true }
   },
+  emits: ['trigger-event'],
+  setup(props) {
+    const { value, setValue } = wwLib.wwVariable.useComponentVariable({
+      uid: props.uid,
+      name: 'value',
+      type: 'string',
+      defaultValue: null
+    });
+
+    return {value, setValue}
+  },
+
   computed: {
-    textStyle() {
-      return {
-        color: this.content.textColor,
-      };
-    },
+    color: {
+      get() {
+        return typeof this.value === 'string' ? this.value : '';
+      },
+
+      set(value) {
+        this.setValue(value);
+      }
+    }
   },
-};
 </script>
 
 <style lang="scss" scoped>
-.my-element {
-  p {
-    font-size: 18px;
-  }
+.ww-color-picker {
+  display: flex;
+  align-items: center;
 }
 </style>

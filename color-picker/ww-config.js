@@ -1,7 +1,7 @@
 export default {
   editor: {
     label: {
-      en: 'My Element',
+      en: 'Color Picker',
     },
   },
   properties: {
@@ -11,6 +11,10 @@ export default {
       },
       type: 'Color',
       defaultValue: '#F23636',
+    },
+    labelComponent: {
+      hidden: true,
+      defaultValue: { isWwObject: true, type: 'ww-text' },
     },
   },
 };
